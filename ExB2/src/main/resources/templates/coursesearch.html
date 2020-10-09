@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Course search</title>
+</head>
+<body>
+	<h1>Course search<span th:text="${person.firstName}"/>!</h1>  
+	
+	<div>
+	   What do you want to do next?
+	   <ul>
+	     <li> <a href="http://localhost/exercise/searchallcourse">Search all courses</a> </li>
+	     <li> <a href="http://localhost/exercise/findcoursebyid">Find course by Id</a> </li>
+	     <li> <a href="http://localhost/exercise/findcoursebytitle">Find course by short title</a> </li>
+	   </ul>	
+	</div>
+	
+	<form action="#" th:action="@{/welcome}" method="get">
+		<span style="margin-left: 200px"><input type="submit" th:value="back"/></span>
+	</form>	
+</body>
+</html>
