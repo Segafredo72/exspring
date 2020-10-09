@@ -22,11 +22,11 @@ public class AppController {
 	
 	@Autowired
 	TrainingService trainingService;
-	
+	 
 	AbisTrainingService courseService;
-	
+	 
 	Person loggedInperson;
-	
+	@Autowired
 	CourseRepository courseRepository;
 		
 	@GetMapping("/")
@@ -59,12 +59,14 @@ public class AppController {
 		model.addAttribute("person", loggedInperson);
 		return "coursesearch";
 	}
-	
+	//search all course webpage 
 	@GetMapping("/searchallcourse")
 	public String showallcourse(Model model){
 		model.addAttribute("person", loggedInperson);
 		model.addAttribute("courselist",courseRepository.findAllCourses());
 		return "searchallcourse";
+		
 	}
-	
+
+		
 }

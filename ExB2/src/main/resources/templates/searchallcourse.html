@@ -4,7 +4,7 @@
 <title>Search all course</title>
 </head>
 <body>
-    <h1>Search all course<span th:text="${person.firstName}"/>!</h1>  
+    <h1>Search all course <span th:text="${person.firstName}"/>!</h1>  
 	<table class="Course table">
 	<thead class = "thead-light">
         <tr>
@@ -17,16 +17,16 @@
         </tr>
     </thead>
 	<tbody>
-		<tr th:each="courselist : ${courselist}">
-            <td th:text="${courselist.courseId}"></td>
-            <td th:text="${courselist.longTitle"></td>
-            <td th:text="${courselist.shortTitle}"></td>
-            <td th:text="${courselist.numberOfDays}"></td>
-            <td th:text="${courselist.pricePerDay}"></td>
+		<tr th:each="course : ${courselist}">
+            <td th:text="${course.courseId}"></td>
+            <td th:text="${course.longTitle}"></td>
+            <td th:text="${course.shortTitle}"></td>
+            <td th:text="${course.numberOfDays}"></td>
+            <td th:text="${course.pricePerDay}"></td>
 		
 		</tr>
 	</tbody>
-	</table>>
+	</table>
 	<form action="#" th:action="@{/coursesearch}" method="get">
 		<span style="margin-left: 200px"><input type="submit" th:value="back"/></span>
 	</form>	
