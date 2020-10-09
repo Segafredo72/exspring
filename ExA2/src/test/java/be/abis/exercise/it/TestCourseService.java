@@ -15,9 +15,9 @@ import be.abis.exercise.service.CourseService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+
 public class TestCourseService {
 
-	
 	@Autowired
 	CourseService courseService;
 	
