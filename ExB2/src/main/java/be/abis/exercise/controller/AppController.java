@@ -24,7 +24,9 @@ public class AppController {
 	TrainingService trainingService;
 	 
 	AbisTrainingService courseService;
-	 
+	
+	Course course;
+	
 	Person loggedInperson;
 	@Autowired
 	CourseRepository courseRepository;
@@ -59,7 +61,7 @@ public class AppController {
 		model.addAttribute("person", loggedInperson);
 		return "coursesearch";
 	}
-	//search all course webpage 
+	
 	@GetMapping("/searchallcourse")
 	public String showallcourse(Model model){
 		model.addAttribute("person", loggedInperson);
@@ -68,5 +70,28 @@ public class AppController {
 		
 	}
 
+	@GetMapping("/showcoursebyid")
+	public String showcoursebyid(Model model , Course c) { 
+		model.addAttribute("person", loggedInperson);
+   		model.addAttribute("course",c);
+		return "showcoursebyid";
 		
+	}
+		
+	@GetMapping("/findcoursebyid")
+	public String getcoursebyid(Model model){
+		String searchedCourseId = "";
+		model.addAttribute("person", loggedInperson);
+		model.addAttribute("searchedCourseId",searchedCourseId);
+		return "findcoursebyid";
+	}
+	
+	@PostMapping("/findcoursebyid")
+	public String submitcoursebyid(Model model,  @ModelAttribute("findcoursebyid") String searchedCourseId) {
+		model.addAttribute("person", loggedInperson);
+		model.addAttribute("course", courseRepository.findCourse(searchedCourseId));
+		return "redirect:/showcoursebyid";
+		
+	}
+	
 }
