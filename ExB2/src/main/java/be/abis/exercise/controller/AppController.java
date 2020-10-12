@@ -83,16 +83,16 @@ public class AppController {
 		return "showcourse";
 	}
 	
-	@PostMapping("/findcoursebyid")
+	@PostMapping("/findCourseById")
 	public String findCourseById(Course courseById){
 		int courseId = Integer.parseInt(courseById.getCourseId());
-		Course courseFound = trainingService.getCourseService().findCourse(courseId);	
+		courseFound = trainingService.getCourseService().findCourse(courseId);	
 		return "redirect:/showcourse";
 	}
 	
-	@PostMapping("/findcoursebytitle")
+	@PostMapping("/findCourseByTitle")
 	public String findCourseByTitle(Course courseByTitle){
-		Course courseFound = trainingService.getCourseService().findCourse(courseByTitle.getShortTitle());	
+		courseFound = trainingService.getCourseService().findCourse(courseByTitle.getShortTitle());	
 		return "redirect:/showcourse";
 	}
 	
