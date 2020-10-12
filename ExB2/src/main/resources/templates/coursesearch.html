@@ -10,11 +10,34 @@
 	   What do you want to do next?
 	   <ul>
 	     <li> <a href="http://localhost:8080/exercise/searchallcourse">Search all courses</a> </li>
-	     <li> <a href="http://localhost:8080/exercise/findcoursebyid">Find course by Id</a> </li>
-	     <li> <a href="http://localhost:8080/exercise/findcoursebytitle">Find course by short title</a> </li>
 	   </ul>	
 	</div>
+<h2>Find a course by id:</h2>
+	<form action="#" th:action="@{/findCourseById}" th:object="${course1}"
+		method="post">
+		<table>
+			<tr>
+				<td>Id:</td>
+				<td><input type="text" th:field="*{courseId}" /></td>
+			</tr>
+		</table>
+		<input type="submit" value="Find" />
+	</form>
 	
+	<br/>
+	
+	<h1>Find a course by title:</h1>
+	<form action="#" th:action="@{/findCourseByTitle}" th:object="${course2}" method="post">
+		<table>
+			<tr>
+				<td>Short Title:</td>
+				<td><input type="text" th:field="*{shortTitle}" /></td>
+			</tr>
+		</table>
+		<input type="submit" value="Find" />
+	</form>
+	
+	<br/>	
 	<form action="#" th:action="@{/welcome}" method="get">
 		<span style="margin-left: 200px"><input type="submit" th:value="back"/></span>
 	</form>	

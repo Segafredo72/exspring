@@ -4,10 +4,8 @@
 <title>Find course by Id</title>
 </head>
 <body>
-	<h1>Find course by Id <span th:text="${person.firstName}"/>!</h1>  
-	
-    <h1>Find course by Id !</h1>
-    <form action="#" th:action="@{/findcoursebyid}" th:object="${submitcoursebyid}" method="post">
+	<h1>Find course by Id !</h1>
+    <form action="#" th:action="@{/findcoursebyid}" th:object="${course}" method="post">
 			<tr>
 				<td>Course Id ?</td>
 				<td><input type="text" th:field="*{searchedCourseId}"/></td>

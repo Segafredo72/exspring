@@ -70,28 +70,36 @@ public class AppController {
 		
 	}
 
-	@GetMapping("/showcoursebyid")
-	public String showcoursebyid(Model model , Course c) { 
+	@GetMapping("/showcourse")
+	public String showcoursebyid(Model model) { 
 		model.addAttribute("person", loggedInperson);
    		model.addAttribute("course",c);
 		return "showcoursebyid";
 		
 	}
-		
-	@GetMapping("/findcoursebyid")
-	public String getcoursebyid(Model model){
-		String searchedCourseId = "";
-		model.addAttribute("person", loggedInperson);
-		model.addAttribute("searchedCourseId",searchedCourseId);
-		return "findcoursebyid";
+	@PostMapping("/findcoursebyid")
+	public String findCourseById(Course courseById){
+		int courseId = Integer.parseInt(courseById getCourseId());
+		Course courseFound = trainingService.getCourseService().findCourse(id);	
+		coursesFound.add(courseFound);
+		return "redirect:/showcourse";
 	}
 	
-	@PostMapping("/findcoursebyid")
-	public String submitcoursebyid(Model model,  @ModelAttribute("findcoursebyid") String searchedCourseId) {
-		model.addAttribute("person", loggedInperson);
-		model.addAttribute("course", courseRepository.findCourse(searchedCourseId));
-		return "redirect:/showcoursebyid";
-		
+	@PostMapping("/findcoursebytitle")
+	public String findCourseByTitle(Course coursebytitle){
+		Course courseFound = trainingService.getCourseService().findCourse(course2.getShortTitle());	
+		coursesFound = new ArrayList<Course>();
+		coursesFound.add(courseFound);
+		return "redirect:/showcourse";
 	}
+	
+	@GetMapping("/backToWelcome")
+	public String backToWelcome(Model model){
+		model.addAttribute("person", loggedInperson);
+		return "redirect:/welcome";
+	}
+	}
+	
+	
 	
 }
