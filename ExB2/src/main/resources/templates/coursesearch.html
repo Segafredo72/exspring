@@ -13,7 +13,7 @@
 	   </ul>	
 	</div>
 <h2>Find a course by id:</h2>
-	<form action="#" th:action="@{/findCourseById}" th:object="${course1}"
+	<form action="#" th:action="@{/findCourseById}" th:object="${courseById}"
 		method="post">
 		<table>
 			<tr>
@@ -26,8 +26,8 @@
 	
 	<br/>
 	
-	<h1>Find a course by title:</h1>
-	<form action="#" th:action="@{/findCourseByTitle}" th:object="${course2}" method="post">
+	<h2>Find a course by title:</h2>
+	<form action="#" th:action="@{/findCourseByTitle}" th:object="${courseByTitle}" method="post">
 		<table>
 			<tr>
 				<td>Short Title:</td>
@@ -38,7 +38,7 @@
 	</form>
 	
 	<br/>	
-	<form action="#" th:action="@{/welcome}" method="get">
+	<form action="#" th:action="@{/backToWelcome}" method="get">
 		<span style="margin-left: 200px"><input type="submit" th:value="back"/></span>
 	</form>	
 </body>

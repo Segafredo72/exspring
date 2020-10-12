@@ -25,7 +25,7 @@ public class AppController {
 	 
 	AbisTrainingService courseService;
 	
-	Course course;
+	Course courseFound;
 	
 	Person loggedInperson;
 	@Autowired
@@ -57,39 +57,42 @@ public class AppController {
 	}
 
 	@GetMapping("/coursesearch")
-	public String coursesearch(Model model){
+	public String courseSearch(Model model){
 		model.addAttribute("person", loggedInperson);
+		model.addAttribute("courseById",new Course());
+		model.addAttribute("courseByTitle",new Course());
 		return "coursesearch";
 	}
 	
 	@GetMapping("/searchallcourse")
-	public String showallcourse(Model model){
+	public String showAllCourse(Model model){
 		model.addAttribute("person", loggedInperson);
 		model.addAttribute("courselist",courseRepository.findAllCourses());
 		return "searchallcourse";
 		
 	}
 
+	@GetMapping("/backToCourseSearch")
+	public String backToCourseSearch(){
+		return "redirect:/coursesearch";
+	}	
+	
 	@GetMapping("/showcourse")
-	public String showcoursebyid(Model model) { 
-		model.addAttribute("person", loggedInperson);
-   		model.addAttribute("course",c);
-		return "showcoursebyid";
-		
+	public String showCourse(Model model) { 
+	 	model.addAttribute("course",courseFound);
+		return "showcourse";
 	}
+	
 	@PostMapping("/findcoursebyid")
 	public String findCourseById(Course courseById){
-		int courseId = Integer.parseInt(courseById getCourseId());
-		Course courseFound = trainingService.getCourseService().findCourse(id);	
-		coursesFound.add(courseFound);
+		int courseId = Integer.parseInt(courseById.getCourseId());
+		Course courseFound = trainingService.getCourseService().findCourse(courseId);	
 		return "redirect:/showcourse";
 	}
 	
 	@PostMapping("/findcoursebytitle")
-	public String findCourseByTitle(Course coursebytitle){
-		Course courseFound = trainingService.getCourseService().findCourse(course2.getShortTitle());	
-		coursesFound = new ArrayList<Course>();
-		coursesFound.add(courseFound);
+	public String findCourseByTitle(Course courseByTitle){
+		Course courseFound = trainingService.getCourseService().findCourse(courseByTitle.getShortTitle());	
 		return "redirect:/showcourse";
 	}
 	
@@ -98,7 +101,7 @@ public class AppController {
 		model.addAttribute("person", loggedInperson);
 		return "redirect:/welcome";
 	}
-	}
+	
 	
 	
 	

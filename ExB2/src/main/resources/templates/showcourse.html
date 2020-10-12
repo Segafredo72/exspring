@@ -4,7 +4,7 @@
 <title>Show course by Id</title>
 </head>
 <body>
-    <h1>Show course by Id <span th:text="${person.firstName}"/>!</h1>
+    <h1>Show course by Id !</h1>
   		<table>
 		<thead class = "thead-light">
         <tr>
@@ -24,7 +24,7 @@
             <td th:text="${course.pricePerDay}"></td>
 		</tr>
 		</table>
-	<form action="#" th:action="@{/findcoursebyid}" method="get">
+	<form action="#" th:action="@{/backToCourseSearch}" method="get">
 		<span style="margin-left: 200px"><input type="submit" th:value="back"/></span>
 	</form>	
 </body>
