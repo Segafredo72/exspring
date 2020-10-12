@@ -113,33 +113,26 @@ public class AppController {
 		return "personadmin";
 	}
 	
-	@GetMapping("/changepwd")
+	@GetMapping("/changepassword")
 	public String showChangePwd(Model model) {
 		model.addAttribute("person",loggedInPerson);
-		return "changepwd";
+		return "changepassword";
 	}
 	
-	@PostMapping("/changepwd")
+	@PostMapping("/changepassword")
 	public String postNewPassword(Model model, Person person) {
 		try {
 			trainingService.changePassword(loggedInPerson, person.getPassword());			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:/confirmpwdchanged";
+		return "redirect:/confirmpasswordchanged";
 		
 	}
-	
-	@GetMapping("/confirmpwdchanged")
-	public String showPwdChanged(Model model) {
-		model.addAttribute("person", loggedInPerson);
-		return "confirmpwdchanged";
-	}
-	
+		
 	@GetMapping("/personsearch")
 	public String searchPersons(Model model){
-		model.addAttribute("person1",new Person());
+		model.addAttribute("personById",new Person());
 		return "personsearch";
 	}	
 	
@@ -161,8 +154,8 @@ public class AppController {
 	}
 	
 	@PostMapping("/findPersonById")
-	public String findPersonById(Person person1){
-		Person personFound = trainingService.findPerson(person1.getPersonId());	
+	public String findPersonById(Person personById){
+		Person personFound = trainingService.findPerson(personById.getPersonId());	
 		personsFound = new ArrayList<Person>();
 		personsFound.add(personFound);
 		return "redirect:/showpersons";
@@ -181,11 +174,6 @@ public class AppController {
 		return "redirect:/confirmpersonremoved";
 	}
 	
-	@GetMapping("/confirmpersonremoved")
-	public String showPersonRemoved(Model model) {
-		model.addAttribute("person",removedPerson);
-		return "confirmpersonremoved";
-	}
 	
 	@GetMapping("/addperson")
 	public String addPerson(Model model){
@@ -199,17 +187,29 @@ public class AppController {
 			trainingService.addPerson(person);
 			addedPerson = trainingService.findPerson(person.getPersonId());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		return "redirect:/confirmpersonadded";
+	}
+		
+	@GetMapping("/confirmpasswordchanged")
+	public String showPwdChanged(Model model) {
+		model.addAttribute("person", loggedInPerson);
+		return "confirmpasswordchanged";
 	}
 	
 	@GetMapping("/confirmpersonadded")
 	public String showPersonAdded(Model model) {
 		model.addAttribute("person",addedPerson);
 		return "confirmpersonadded";
+
 	}
 	
+	@GetMapping("/confirmpersonremoved")
+	public String showPersonRemoved(Model model) {
+		model.addAttribute("person",removedPerson);
+		return "confirmpersonremoved";
+	}
+
 	
 }
