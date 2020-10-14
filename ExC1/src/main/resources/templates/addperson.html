@@ -1,0 +1,86 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Add a Person</title>
+</head>
+<body>
+	<h1>Add a Person</h1>
+	<form action="#" th:action="@{/addPerson}" th:object="${person}" method="post">
+		<table>
+			<tr>
+				<td>PersonNumber:</td>
+				<td><input type="text" th:field="*{personId}"/></td>
+			</tr>
+			<tr>
+				<td>First Name:</td>
+				<td><input type="text" th:field="*{firstName}"/></td>
+				<td class=red th:errors="*{firstName}"><span> </span>
+			</tr>
+			<tr>
+				<td>Last Name:</td>
+				<td><input type="text" th:field="*{lastName}"/></td>
+			</tr>
+			<tr>
+				<td>Age:</td>
+				<td><input type="text" th:field="*{age}"/></td>
+			</tr>
+			<tr>
+				<td>Language:</td>
+				<td>
+				   <select th:field="*{language}">
+	                 <option th:value="'NL'" th:text="dutch"></option>
+	                 <option th:value="'FR'" th:text="french"></option>
+	                 <option th:value="'EN'" th:text="english"></option>
+	               </select>
+	           </td>
+			</tr>
+			<tr>
+				<td>Email:</td>
+				<td><input type="text" th:field="*{emailAddress}"/></td>
+				<td class=red th:errors="*{emailAddress}"><span> </span>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type="password" th:field="*{password}"/></td>
+				<td class=red th:errors="*{password}"><span> </span>
+			</tr>
+			<tr>
+				<td>Company name:</td>
+				<td><input type="text" th:field="*{company.name}"/></td>
+				<td class=red th:errors="*{company.name}"><span> </span>
+			</tr>
+			<tr>
+				<td>Company telephone number:</td>
+				<td><input type="text" th:field="*{company.telephoneNumber}"/></td>
+			</tr>
+			<tr>
+				<td>Company vat:</td>
+				<td><input type="text" th:field="*{company.vatNr}"/></td>
+			</tr>
+			<tr>
+				<td>Company Street:</td>
+				<td><input type="text" th:field="*{company.address.street}"/></td>
+			</tr>
+			<tr>
+				<td>Company Home Number:</td>
+				<td><input type="text" th:field="*{company.address.nr}"/></td>
+			</tr>
+			<tr>
+				<td>Company Zip Code:</td>
+				<td><input type="text" th:field="*{company.address.zipcode}"/></td>
+			</tr>
+			<tr>
+				<td>Company Town:</td>
+				<td><input type="text" th:field="*{company.address.town}"/></td>
+				<td class=red th:errors="*{company.town}"><span> </span>
+			</tr>
+			<tr>
+				<td></td>
+				<td style="text-align:right"><input type="submit" value="Add person"/></td>
+			</tr>
+		</table>
+		
+	</form>
+
+</body>
+</html>
