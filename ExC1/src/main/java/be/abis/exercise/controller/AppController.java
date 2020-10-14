@@ -190,7 +190,7 @@ public class AppController {
 	}
 	
 	@PostMapping("/addPerson")
-	public String addPerson(@Valid Person person, BindingResult bindingResult){
+	public String addPerson(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult){
 		if (bindingResult.hasErrors()) {
             return ("addPerson");
         }

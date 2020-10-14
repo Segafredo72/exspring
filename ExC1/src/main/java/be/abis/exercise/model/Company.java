@@ -1,5 +1,6 @@
 package be.abis.exercise.model;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 public class Company{
@@ -8,6 +9,8 @@ public class Company{
 	private String name;
 	private String telephoneNumber;
 	private String vatNr;
+	
+	@Valid
 	private Address address;
 		
 	public String getName() {
