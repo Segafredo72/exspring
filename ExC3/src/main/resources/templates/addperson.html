@@ -14,7 +14,7 @@
 			<tr>
 				<td>First Name:</td>
 				<td><input type="text" th:field="*{firstName}"/></td>
-				<td class=red th:errors="*{firstName}"><span> </span>
+				<td style="color:red" th:errors="*{firstName}"><span> </span>
 			</tr>
 			<tr>
 				<td>Last Name:</td>
@@ -37,17 +37,17 @@
 			<tr>
 				<td>Email:</td>
 				<td><input type="text" th:field="*{emailAddress}"/></td>
-				<td class=red th:errors="*{emailAddress}"><span> </span>
+				<td style="color:red" th:errors="*{emailAddress}"><span> </span>
 			</tr>
 			<tr>
 				<td>Password:</td>
 				<td><input type="password" th:field="*{password}"/></td>
-				<td class=red th:errors="*{password}"><span> </span>
+				<td style="color:red" th:errors="*{password}"><span> </span>
 			</tr>
 			<tr>
 				<td>Company name:</td>
 				<td><input type="text" th:field="*{company.name}"/></td>
-				<td class=red th:errors="*{company.name}"><span> </span>
+				<td style="color:red" th:errors="*{company.name}"><span> </span>
 			</tr>
 			<tr>
 				<td>Company telephone number:</td>
@@ -72,14 +72,16 @@
 			<tr>
 				<td>Company Town:</td>
 				<td><input type="text" th:field="*{company.address.town}"/></td>
-				<td class=red th:errors="*{company.address.town}"><span> </span>
+				<td style="color:red" th:errors="*{company.address.town}"><span> </span>
 			</tr>
 			<tr>
 				<td></td>
 				<td style="text-align:right"><input type="submit" value="Add person"/></td>
 			</tr>
 		</table>
-		
+		<div>
+			<td style="color:red" th:errors="*{global}"><span> </span>
+		</div>
 	</form>
 
 </body>

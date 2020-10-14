@@ -194,6 +194,13 @@ public class AppController {
 		if (bindingResult.hasErrors()) {
             return ("addPerson");
         }
+	
+		if (trainingService.findPerson(person.getEmailAddress(), person.getPassword()) != null) {
+			bindingResult.rejectValue("global", "", "This Person already exists");
+			return ("addPerson");
+		}
+	
+		
 		try {	
 			trainingService.addPerson(person);
 			addedPerson = trainingService.findPerson(person.getPersonId());
