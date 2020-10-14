@@ -192,12 +192,12 @@ public class AppController {
 	@PostMapping("/addPerson")
 	public String addPerson(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult){
 		if (bindingResult.hasErrors()) {
-            return ("addPerson");
+            return ("addperson");
         }
 	
 		if (trainingService.findPerson(person.getEmailAddress(), person.getPassword()) != null) {
-			bindingResult.rejectValue("global", "", "This Person already exists");
-			return ("addPerson");
+			bindingResult.rejectValue("Global", "", "This Person already exists");
+			return ("addperson");
 		}
 	
 		
