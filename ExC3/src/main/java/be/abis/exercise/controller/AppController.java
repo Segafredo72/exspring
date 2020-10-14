@@ -53,7 +53,13 @@ public class AppController {
 	}
 	
 	@PostMapping("/")
-	public String welcome(Model model, @ModelAttribute("login") Login login) {
+	public String welcome(Model model, @Valid @ModelAttribute("login") Login login, BindingResult bindingResult) {
+		
+		if (bindingResult.hasErrors()) {
+			bindingResult.reject("login", "This is invalid login");
+			return ("login");
+		}
+	
 		loggedInPerson =trainingService.findPerson(login.getEmail(),login.getPassword());
 		return "redirect:/welcome";
 	}
@@ -195,12 +201,6 @@ public class AppController {
             return ("addperson");
         }
 	
-		if (trainingService.findPerson(person.getEmailAddress(), person.getPassword()) != null) {
-			bindingResult.rejectValue("Global", "", "This Person already exists");
-			return ("addperson");
-		}
-	
-		
 		try {	
 			trainingService.addPerson(person);
 			addedPerson = trainingService.findPerson(person.getPersonId());
