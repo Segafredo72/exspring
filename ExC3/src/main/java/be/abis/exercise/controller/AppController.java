@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import be.abis.exercise.exception.PersonCanNotBeDeletedException;
 import be.abis.exercise.model.Course;
 import be.abis.exercise.model.Login;
+import be.abis.exercise.model.Password;
 import be.abis.exercise.model.Person;
 import be.abis.exercise.repository.CourseRepository;
 import be.abis.exercise.service.AbisTrainingService;
@@ -56,15 +58,23 @@ public class AppController {
 	public String welcome(Model model, @Valid @ModelAttribute("login") Login login, BindingResult bindingResult) {
 		
 		if (bindingResult.hasErrors()) {
-			bindingResult.reject("login", "This is invalid login");
+			bindingResult.reject("login", "This is invalid login details");
 			return ("login");
 		}
-	
+		
 		loggedInPerson =trainingService.findPerson(login.getEmail(),login.getPassword());
-		return "redirect:/welcome";
+		
+		if (loggedInPerson == null) {
+			bindingResult.reject("email", "This is invalid login details");
+			bindingResult.reject("password", "This is invalid password");
+			return ("login");
+		} else {
+			return "redirect:/welcome";
+		}
 	}
 	
 	
+		
 	@GetMapping("/welcome")
 	public String showWelcome(Model model){
 		model.addAttribute("person", loggedInPerson);
@@ -111,8 +121,12 @@ public class AppController {
 	}
 	
 	@PostMapping("/findCourseByTitle")
-	public String findCourseByTitle(Course courseByTitle){
-		courseFound = trainingService.getCourseService().findCourse(courseByTitle.getShortTitle());	
+	public String findCourseByTitle(Model model, @Valid @ModelAttribute("course") Course course,BindingResult result){
+		Course courseFound = trainingService.getCourseService().findCourse(course.getShortTitle());	
+		if (courseFound==null) {
+			   result.rejectValue("shortTitle", "","No course found with this title");
+			   return "coursesearch";
+		}
 		return "redirect:/showcourse";
 	}
 	
@@ -129,14 +143,20 @@ public class AppController {
 	
 	@GetMapping("/changepassword")
 	public String showChangePwd(Model model) {
-		model.addAttribute("person",loggedInPerson);
+		model.addAttribute("pwd",new Password());
 		return "changepassword";
 	}
 	
 	@PostMapping("/changepassword")
-	public String postNewPassword(Model model, Person person) {
+	public String postNewPassword(Model model, @Valid @ModelAttribute("pwd") Password password, BindingResult bindingResult) {
 		try {
-			trainingService.changePassword(loggedInPerson, person.getPassword());			
+			System.out.println("new password: " +password.getPassword1());
+			if (bindingResult.hasErrors()) {
+				return "changepassword";
+			}
+			trainingService.changePassword(loggedInPerson, password.getPassword1());
+			password.setConfirmMessage("password was changed");
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -168,8 +188,12 @@ public class AppController {
 	}
 	
 	@PostMapping("/findPersonById")
-	public String findPersonById(Person personById){
+	public String findPersonById(@Valid @ModelAttribute("personById") Person personById, BindingResult bindingResult){
 		Person personFound = trainingService.findPerson(personById.getPersonId());	
+		if (personFound==null) {
+			   bindingResult.reject("personId", "No person found with this id");
+			   return "personsearch";
+		}
 		personsFound = new ArrayList<Person>();
 		personsFound.add(personFound);
 		return "redirect:/showpersons";
@@ -182,9 +206,14 @@ public class AppController {
 	}
 	
 	@PostMapping("/removePersonById")
-	public String removePersonById(Person person){
-		removedPerson=trainingService.findPerson(person.getPersonId());
-		trainingService.deletePerson(person.getPersonId());	
+	public String removePersonById(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult) throws PersonCanNotBeDeletedException{
+		 int id = person.getPersonId();
+	        if (loggedInPerson.getPersonId()==id) {
+	        	bindingResult.reject("personId", "You cannot delete yourself");
+				 return "removeperson";
+	        }
+			removedPerson=trainingService.findPerson(id);
+			trainingService.deletePerson(id);		
 		return "redirect:/confirmpersonremoved";
 	}
 	
@@ -197,15 +226,16 @@ public class AppController {
 	
 	@PostMapping("/addPerson")
 	public String addPerson(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult){
-		if (bindingResult.hasErrors()) {
+		try {		
+			if (bindingResult.hasErrors()) {
             return ("addperson");
-        }
+			}
 	
-		try {	
 			trainingService.addPerson(person);
 			addedPerson = trainingService.findPerson(person.getPersonId());
 		} catch (IOException e) {
-			e.printStackTrace();
+			bindingResult.reject("personId","This person already exists in our system");
+			return "addPerson";
 		}	
 		return "redirect:/confirmpersonadded";
 	}
